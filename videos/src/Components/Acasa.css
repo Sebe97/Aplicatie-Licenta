@@ -1,0 +1,35 @@
+.sidebar-section img{
+    width: 100%;
+}
+.imagineLateralaAcasa{
+    height: 50%;
+    width: 100%;
+}
+.logo{
+    width: 20%;
+}
+.bineAtiVenit{
+    text-align: center;
+}
+.fullBody{
+    background-color:#f1e6da;
+    
+}
+.wrapper{
+    background-color: #e3ccb5;
+    margin-left: 5% ;
+    margin-right:5% ;
+  
+}
+.imagineAcasa{
+    height: 400px;
+    object-fit: cover;
+}
+.content{
+    padding-left: 5%;
+    padding-right: 5%;
+}
+.footer{
+    background-color: gray;
+    padding-top: 1px; 
+}
