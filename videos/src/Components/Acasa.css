@@ -30,6 +30,8 @@
     padding-right: 5%;
 }
 .footer{
-    background-color: gray;
+    background-color: #4d4dff;
     padding-top: 1px; 
 }
+transition: 1s; 
+    left: 0;
