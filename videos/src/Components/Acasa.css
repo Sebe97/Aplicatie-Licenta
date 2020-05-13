@@ -11,27 +11,31 @@
 .bineAtiVenit{
     text-align: center;
 }
-.fullBody{
-    background-color:#f1e6da;
+.acasaWrapper{
+    background-color: white;
+    margin-left : 5% ;
+    margin-right:5% ;
+    margin: auto;
+    width: 1200px ;
     
 }
-.wrapper{
-    background-color: #e3ccb5;
-    margin-left: 5% ;
-    margin-right:5% ;
-  
-}
-.imagineAcasa{
+.colImagineAcasa{
     height: 400px;
-    object-fit: cover;
+    width: 1200px;
+    background-image: url('../images/acasa.jpg');
+    background-size: cover;
+    position: relative;
+}
+.oferimTratament{
+    padding-top: 3%;
+    padding-left: 1%;
+    font-family: 'Times New Roman';
 }
 .content{
     padding-left: 5%;
     padding-right: 5%;
 }
 .footer{
-    background-color: #4d4dff;
+    background-color: blanchedalmond;
     padding-top: 1px; 
 }
-transition: 1s; 
-    left: 0;

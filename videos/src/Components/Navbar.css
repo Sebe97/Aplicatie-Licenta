@@ -1,0 +1,10 @@
+
+.imagineLogo{
+    height: 140%;
+    width: 140% ;
+}
+.navbar-nav{
+display: flex;
+justify-content: flex-start;
+align-items: center;
+}
