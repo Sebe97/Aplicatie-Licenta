@@ -91,7 +91,7 @@ const Example = (props) => {
         <a class="nav-link" href="/Contact">Contact</a>
       </li>
       <li class="nav-item col-md-1">
-        <a class="nav-link" href="#">Loctie</a>
+        <a class="nav-link" href="/Locatie">Loctie</a>
       </li>
       <li class="nav-item dropdown col-md-2">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -111,7 +111,6 @@ const Example = (props) => {
     </ul>
   </div>
 </nav>
-
 
 
 

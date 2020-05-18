@@ -149,3 +149,4 @@ const AcasaFooter = () => {
 }
 
 export default AcasaFooter;
+
