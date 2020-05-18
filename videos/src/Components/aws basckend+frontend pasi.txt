@@ -49,3 +49,18 @@ OBS: sudo docker ps pentru a vedea docker urile care ruleaza
 
 18. rulam frontendul pe portul 80:4200:
 sudo docker run -d -p 80:4200 frontend:v2
+
+
+
+Pentru instalare docker compose
+		
+sudo curl -L "https://github.com/docker/compose/releases/download/1.25.5/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    
+sudo chmod +x /usr/local/bin/docker-compose
+
+testam daca s-a instalat ruland :
+docker-compose version
+ 
+instalam git pe server : sudo yum install git
+ 
+

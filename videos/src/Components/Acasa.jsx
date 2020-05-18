@@ -2,7 +2,7 @@ import React , {Component} from 'react';
 import {Link} from 'react-router-dom';
 import {Jumbotron, div, Row, Col, Image, Button} from 'react-bootstrap';
 import './Acasa.css';
-import AcasaFooter from './AcasaFooter';
+import AcasaFooter from './Footer';
 import ImagineDescriere from './Image';
 import { ramuri } from "./ramuri";
 import imgStomatologieGenerala from '../images/stomatologie-generala.png';

@@ -1,6 +1,8 @@
 import React from "react";
 import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import { FacebookIcon   } from "react-share"; // pentru linkul/iconita de fb
+import './Footer.css';
+
 const AcasaFooter = () => {
     return (
         // <MDBFooter color="mdb-color" className="font-small lighten-3 footer">
@@ -85,7 +87,6 @@ const AcasaFooter = () => {
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 1</h4>
           <ul class="list-unstyled">
@@ -99,7 +100,6 @@ const AcasaFooter = () => {
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 2</h4>
           <ul class="list-unstyled">
@@ -113,7 +113,6 @@ const AcasaFooter = () => {
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 3</h4>
           <ul class="list-unstyled">
