@@ -85,7 +85,6 @@ const AcasaFooter = () => {
   <div class="container">
     <div class="row">
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 1</h4>
           <ul class="list-unstyled">
@@ -99,7 +98,6 @@ const AcasaFooter = () => {
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 2</h4>
           <ul class="list-unstyled">
@@ -113,7 +111,6 @@ const AcasaFooter = () => {
         </div>
       </div>
       <div class="col-md-3 col-sm-6">
-        <!--Column1-->
         <div class="footer-pad">
           <h4>Heading 3</h4>
           <ul class="list-unstyled">
@@ -150,3 +147,4 @@ const AcasaFooter = () => {
 }
 
 export default AcasaFooter;
+

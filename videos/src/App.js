@@ -5,6 +5,7 @@ import {BrowserRouter as Router,  Route} from 'react-router-dom';
 import Acasa from './Components/Acasa';
 import Despre from './Components/Despre';
 import Contact from './Components/Contact';
+import Locatie from './Components/Locatie';
 import {Image} from 'react-bootstrap';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/" component={Acasa}/>
             <Route exact path="/Despre" component={Despre}/>
             <Route exact path="/Contact" component={Contact}/>
+            <Route exact path="/Locatie" component={Locatie}/>
           </div>
         </div>
       </Router>
