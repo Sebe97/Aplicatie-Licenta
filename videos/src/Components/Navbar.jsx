@@ -27,16 +27,14 @@ const Example = (props) => {
 
   return (
     <div>
-      {/* <Navbar color="light" light expand="md">
-        <NavbarBrand>
-          <Link to="/">
-            <Image src={require('../images/logo.png')} circle className="rounded-circle logo" />
-
-          </Link>
-        </NavbarBrand>
+       <Navbar color="light" light expand="md">
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto" navbar>
+          <Nav className="mr-auto col-md-12" navbar>
+          <a className="navbar-brand col-md-1" href="/">
+            <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
+          </a>
+            
             <NavItem href="/Despre">
               <NavLink>
                 <Link to="/Despre">
@@ -46,8 +44,8 @@ const Example = (props) => {
             </NavItem>
             <NavItem>
               <NavLink >
-                <Link to="/">
-                  GitHub
+                <Link to="/Programare">
+                  Programare
                 </Link>
               </NavLink>
             </NavItem>
@@ -68,11 +66,11 @@ const Example = (props) => {
               </DropdownMenu>
             </UncontrolledDropdown>
           </Nav>
-          <NavbarText>
-            <h1>Programari la: 0747691012</h1></NavbarText>
+          {/* <NavbarText>
+            <h1>Programari la: 0747691012</h1></NavbarText> */}
         </Collapse>
-      </Navbar> */}
-<nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
+      </Navbar> 
+{/* <nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
   <a class="navbar-brand col-md-1" href="/">
     <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
 
@@ -110,7 +108,7 @@ const Example = (props) => {
       </li>
     </ul>
   </div>
-</nav>
+</nav> */}
 
 
 

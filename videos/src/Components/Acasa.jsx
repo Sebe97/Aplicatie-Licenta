@@ -20,7 +20,7 @@ export default class Acasa extends Component{
                         <Col className="sidebar-section colImagineAcasa" > 
                             {/* <Image src={require('../images/acasa.jpg')} className='imagineAcasa'/>                    */}
                             <h1 className = "oferimTratament">
-                                @@@@@@Oferim tratamentul optim <br></br>Adaptat fiecărui pacient
+                                Oferim tratamentul optim <br></br>Adaptat fiecărui pacient
                             </h1>
                         </Col>
                     </Row>

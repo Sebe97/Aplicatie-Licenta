@@ -1,7 +1,12 @@
 
+.logoContainer{
+    height: 100px;
+    width: 100px;
+}
 .imagineLogo{
-    height: 140%;
-    width: 140% ;
+    height: 100%;
+    width: 100%;
+
 }
 .navbar-nav{
 display: flex;
