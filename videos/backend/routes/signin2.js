@@ -3,7 +3,6 @@ let User = require('../models/user.model');
 let UserSession = require('../models/userSession.model');
 
 
-
 router.route('/').get((req, res) => { // aduce toti userii
     User.find()
         .then(users => res.json(users))
@@ -90,34 +89,61 @@ router.route('/signin').post((req, res) => { // intrare in cont
 
 
 
-router.route('/verify').post((req, res) => { //verificare token 
+router.route('/verify').get((req, res) => { //verificare token 
     UserSession.find({ // aducem tokenul din baza de date
-        _id:req.body.token,
+        // _id:"5eccccaf339abd17d82e9800",
+        _id:req.query.token,
+        isDeleted: false,
        
-    }, (err, session) =>{
-      return res.send(session)
+    }, (err, session) =>{ 
+     
         
-        // if(err){
-        //     return res.send({
-        //         success: false,
-        //         message: 'Eroare de server'
-        //     })
-        // }
-        // if(session.length != 1){
-        //     return res.send({
-        //         success: false,
-        //         message: 'Prea multe sesiuni'
-        //     })
-        // }
-        // else{
-        //     return res.send({
-        //         success: true,
-        //         message: 'Good'
-        //     })
-        // }
+        if(err){ 
+            return res.send({
+                success: false,
+                message: 'Eroare de server'
+            })
+        }
+        if(session.length != 1){
+            return res.send({
+                success: false,
+                message: 'Prea multe sesiuni'
+            })
+        }
+        else{
+            return res.send({
+                success: true,
+                message: 'Good'
+            })
+        }
     })
 });
 
+router.route('/logout').get((req, res)=>{
+    UserSession.findOneAndUpdate( 
+        { _id: req.query.token },
+        { $set: { isDeleted: true } },
+        null, (err, sessions) => {
+            if(err) {
+                    return res.send({
+                    success: false,
+                    message: 'Eroare de server'
+                })
+            }
 
+        return res.send({
+            success: true,
+            message: 'Good'
+        })
 
+        }
+    )
+})
 module.exports = router;
+
+
+// Workflow
+
+// 1. Cand se incarca pagina ( pe componentDidMount), verificam daca utilizatorul are un token (seesionId) in localStorage
+//     - Daca nu au => nu e logat => logIn Screen
+//     - Daca au => verificam tokenul  

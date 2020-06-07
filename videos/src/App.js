@@ -5,6 +5,7 @@ import {BrowserRouter as Router,  Route} from 'react-router-dom';
 import Acasa from './Components/Acasa';
 import Despre from './Components/Despre';
 import Programare from './Components/Programare';
+import Login from './Components/Login';
 import {Image} from 'react-bootstrap';
 
 class App extends Component {
@@ -20,6 +21,7 @@ class App extends Component {
             <Route exact path="/" component={Acasa}/>
             <Route exact path="/Despre" component={Despre}/>
             <Route exact path="/Programare" component={Programare}/>
+            <Route exact path="/Login" component={Login}/>
           </div>
         </div>
       </Router>

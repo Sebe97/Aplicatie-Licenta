@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+mongoose.set('useFindAndModify', false); // din cauza unor updateuri "useFindAndModify" suprascrie "findOneAndUpdate", deci acest rand dezactiveaza "useFindAndModify"
 
 require('dotenv').config();
 
