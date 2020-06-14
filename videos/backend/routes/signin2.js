@@ -13,7 +13,6 @@ router.route('/').get((req, res) => { // aduce toti userii
 
 
 
-
 router.route('/signup').post((req, res) => { // cont nou
     const newUser = new User({
         firstName : req.body.firstName, 
@@ -26,7 +25,6 @@ router.route('/signup').post((req, res) => { // cont nou
         .then(users => res.json('User Adaugat'))
         .catch(err => res.status(400).json('Error: ' + err));
 });
-
 
 
 
@@ -89,6 +87,7 @@ router.route('/signin').post((req, res) => { // intrare in cont
 
 
 
+
 router.route('/verify').get((req, res) => { //verificare token 
     UserSession.find({ // aducem tokenul din baza de date
         // _id:"5eccccaf339abd17d82e9800",
@@ -119,6 +118,10 @@ router.route('/verify').get((req, res) => { //verificare token
     })
 });
 
+
+
+
+
 router.route('/logout').get((req, res)=>{
     UserSession.findOneAndUpdate( 
         { _id: req.query.token },
@@ -139,6 +142,10 @@ router.route('/logout').get((req, res)=>{
         }
     )
 })
+
+
+
+
 module.exports = router;
 
 
