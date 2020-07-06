@@ -1,5 +1,4 @@
 import React from "react";
-import { MDBCol, MDBContainer, MDBRow, MDBFooter } from "mdbreact";
 import { FacebookIcon   } from "react-share"; // pentru linkul/iconita de fb
 import './Footer.css';
 

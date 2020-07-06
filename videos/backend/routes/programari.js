@@ -1,5 +1,7 @@
 const router = require('express').Router();
 let Programare = require('../models/programare.model');
+let Users = require('../models/user.model');
+
 
 router.route('/').get((req, res) => {
     Programare.find()
@@ -7,26 +9,123 @@ router.route('/').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
+
+router.route('/getSorted').get((req, res) => {
+    Programare.find().sort({data:1})
+    .then(programari => res.json(programari))
+    .catch(err => res.status(400).json('Error: ' +err));
+});
+
+
+router.route('/deleteOne').post((req, res) => {
+       
+       Programare.deleteOne( { "_id" : req.body.id }, function(err){
+           if(err)  res.json(err)
+           else res.json("Programarea a fost stearsa")
+       })
+       
+});
+
+
+router.route('/getSortedStartingToday').get((req, res) => {
+    var astazi = new Date();
+    var day = astazi.getDate();
+    var month = astazi.getMonth();
+    var year = astazi.getFullYear();
+    day = day < 10 ? '0'+ day : day;
+    month = Number(month +1);
+    month = month < 10 ? '0'+ month : month
+    let astaziFormatat = month + '-' + day + '-' + year
+    // console.log(astaziFormatat);
+    
+    
+    Programare.find({ "data": { "$gte": astaziFormatat } }).sort({data:1})
+    .then(programari => {
+        
+        res.json(programari)
+    })
+    .catch(err => res.status(400).json('Error: ' +err));
+});
+
+
+router.route('/getToday').get((req, res) => {
+    var astazi = new Date();
+    var day = astazi.getDate();
+    var month = astazi.getMonth();
+    var year = astazi.getFullYear();
+    day = day < 10 ? '0'+ day : day;
+    month = Number(month +1);
+    month = month < 10 ? '0'+ month : month
+    let astaziFormatat = month + '-' + day + '-' + year
+    
+    Programare.find({ "data": { "$eq": astaziFormatat } }).sort({data:1})
+    .then(programari => {
+        
+        res.json(programari)
+    })
+    .catch(err => res.status(400).json('Error: ' +err));
+});
+
+
+
+router.route('/getSpecificDay').post((req, res) => {
+    
+    var astazi = new Date(req.body.astazi);
+    var day = astazi.getDate();
+    var month = astazi.getMonth();
+    var year = astazi.getFullYear();
+    day = day < 10 ? '0'+ day : day;
+    month = Number(month +1);
+    month = month < 10 ? '0'+ month : month
+    let astaziFormatat = month + '-' + day + '-' + year
+    
+    
+    Programare.find({ "data": { "$eq": astaziFormatat } }).sort({data:1})
+    .then(programari => {
+        
+       return res.json(programari)
+    })
+    .catch(err => res.status(400).json('Error: ' +err));
+});
+
+
+router.route('/getBySpecificUser').post((req, res) => {
+    
+    console.log(req.body.idUser);
+    
+    Programare.find({user:req.body.idUser})
+    .then(programari => {
+        console.log(programari);
+        
+       return res.json(programari)
+    })
+    .catch(err => res.status(400).json('Error: ' +err));
+});
+
+
 router.route('/add').post((req, res) => {
     const newProgramare = new Programare({
-         nume    :req.body.nume,
-         telefon :req.body.telefon,
-         data    :req.body.data,
-         ora     :req.body.ora,
+         nume   :req.body.nume,
+         telefon:req.body.telefon,
+         data   :req.body.data,
+         ora    :req.body.ora,
+         user   :req.body.userId,
         })
     newProgramare.save()
     .then(programari => res.json('Programare Adaugata'))
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
+
 router.route('/data').post((req, res) => {
     const {data} = req.body // ia variabila "data" din body
-    console.log("data aici== " , data); 
+    // console.log("data aici== " , data); 
     
     Programare.find({data:data})
     .then(programare => res.json(programare))
     .catch(err => res.status(400).json('Error: ' +err));
 });
+
 
 router.route('/:id').get((req, res) => {
     Programare.findById(req.params.id)
@@ -34,11 +133,13 @@ router.route('/:id').get((req, res) => {
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
+
 router.route('/:id').delete((req, res) => {
     Programare.findByIdAndDelete(req.params.id)
     .then(programari => res.json('Programare Stearsa'))
     .catch(err => res.status(400).json('Error: ' +err));
 });
+
 
 router.route('/update/:id').post((req, res) => {
    

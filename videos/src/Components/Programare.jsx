@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 
 import './Programare.css';
 import './Despre.css';
-
+import Login from "./Login";
+import Navbar from "./Navbar";
 import axios from 'axios';
 import { format, excludeTimes, setHours, setMinutes } from 'date-fns'
 import DatePicker from 'react-datepicker';
@@ -24,28 +25,25 @@ export default class Programare extends Component {
                     data          : new Date(),
                     ora           : "",
                     oreDisponibile: [],
+                    token         :"",
                 }
     
             }
     
             componentDidMount() {
-                // const { oreOcupate=[]} = this.state.oreOcupate;
-                // axios.get('http://localhost:5000/programari/')
-                // .then(response => {
-                //     if(response.data.length > 0){
-                        
-                //         response.data.forEach(el => {
-                //             console.log(el);
-                            
-                //             // oreOcupate.push(el.ora)
-                //             // this.setState({oreOcupate})
-                //        })
-                //     }
-                // })
-                // .catch((error) => {
-                // console.log(error);
-                // })
-             
+
+                const token = localStorage.getItem("userSession");
+                this.setState({
+                    token ,
+                })
+                
+                axios.post('  http://localhost:5000/account/getUserByToken',{token}) // aducem inregistrarile din data aleasa
+              .then(res =>{
+                  console.log("res al get all users");
+                  console.log(res);
+                  
+              })
+
               }
 
             // Functii onChange 
@@ -82,6 +80,7 @@ export default class Programare extends Component {
             
             const{
                     oreDisponibile = [],
+                    token,
                 } = this.state
                 
                 this.setState({
@@ -89,7 +88,7 @@ export default class Programare extends Component {
                 })
                 
                 let oreDejaOcupate = [];
-                let dataFormatata = format(new Date(e),"dd-MM-yyyy")
+                let dataFormatata = format(new Date(e),"MM-dd-yyyy")
                 let bodyReq = {"data":dataFormatata}
                 
                 axios.post('http://localhost:5000/programari/data',bodyReq) // aducem inregistrarile din data aleasa
@@ -130,12 +129,17 @@ export default class Programare extends Component {
 
             onsubmit(e){ // functia pentru submit formular
                 e.preventDefault();
-              
+                const{
+                    token,
+                } = this.state
+                console.log('token==', token);
+               
                 const programare = { 
                     nume    :this.state.nume,
                     telefon :this.state.telefon,
-                    data    :format(new Date(this.state.data),"dd-MM-yyyy"),
+                    data    :format(new Date(this.state.data),"MM-dd-yyyy"),
                     ora     :this.state.ora,
+                    userId    :token,
                 }
 
                // posteaza catre server
@@ -148,12 +152,14 @@ export default class Programare extends Component {
                     telefon :"",
                     data    :"",
                     ora     :"",
+                    user    :"",
                 })
             }// END functia pentru submit formular
            
         render() {
 
         const {
+            token="",
             oreDisponibile=[],   // aici am orele din baza de date ( orele pentru care deja s-a facut programare )
         } = this.state;
         
@@ -161,54 +167,62 @@ export default class Programare extends Component {
         console.log(oreDisponibile);
         
         return (
-            <div class="form">
-            <div class="note">
-                <p>Programeaza-te.</p>
-            </div>
+            <div>
+                { !token && <Login/>}
+                { token&&
+                     <div>
+                         <Navbar/>
+                            <div class="form">
+                                <div class="note">
+                                    <p>Programeaza-te.</p>
+                                </div>
 
-            <form onSubmit={this.onsubmit} class="form-content">
-                <div class="row">
+                                <form onSubmit={this.onsubmit} class="form-content">
+                                    <div class="row">
 
-                    <div class="col-md-12">
-                        <div class="form-group col-md-6">
-                            <input type="text" onChange={this.onChangeNume} value={this.state.nume} class="form-control" placeholder="Numele Tau *" />
-                        </div>
-                        <div class="form-group col-md-6">
-                            <input type="text"  onChange={this.onChangeTelefon} value={this.state.telefon}class="form-control" placeholder="Telefon *"/>
-                        </div>
-                        <div class="form-grou col-md-12 d-flex">
-                            <DatePicker
-                             className="form-control col-md-6"
-                             selected = {this.state.data}
-                             onChange ={this.onChangeData}
-                             todayButton="Vandaag"
-                            dateFormat="dd/MM/yyyy"
-                            />
-                        <div>
-                            <div className="form-group d-flex"> 
-                                <label>Ora: </label>
-                                <select ref="programareInput"
-                                    required
-                                    className="form-control"
-                                    value={this.state.ora}
-                                    onChange={this.onChangeOra}>
-                                    {
-                                        oreDisponibile.map(function(ora) {
-                                        return <option 
-                                            key={ora}
-                                            value={ora}>{ora}
-                                            </option>;
-                                        })
-                                    }
-                                </select>
+                                        <div class="col-md-12">
+                                            <div class="form-group col-md-6">
+                                                <input type="text" onChange={this.onChangeNume} value={this.state.nume} class="form-control" placeholder="Numele Tau *" />
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <input type="text"  onChange={this.onChangeTelefon} value={this.state.telefon}class="form-control" placeholder="Telefon *"/>
+                                            </div>
+                                            <div class="form-grou col-md-12 d-flex">
+                                                <DatePicker
+                                                className="form-control col-md-6"
+                                                selected = {this.state.data}
+                                                onChange ={this.onChangeData}
+                                                todayButton="Vandaag"
+                                                dateFormat="MM-dd-yyyy"
+                                                />
+                                            <div>
+                                                <div className="form-group d-flex"> 
+                                                    <label>Ora: </label>
+                                                    <select ref="programareInput"
+                                                        required
+                                                        className="form-control"
+                                                        value={this.state.ora}
+                                                        onChange={this.onChangeOra}>
+                                                        {
+                                                            oreDisponibile.map(function(ora) {
+                                                            return <option 
+                                                                key={ora}
+                                                                value={ora}>{ora}
+                                                                </option>;
+                                                            })
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <input type="submit" class="btnSubmit"/>
+                                </form>
                             </div>
                         </div>
-                        </div>
-                    </div>
-                </div>
-                <input type="submit" class="btnSubmit"/>
-            </form>
-        </div>
+                }
+            </div>
         )
     }
 }

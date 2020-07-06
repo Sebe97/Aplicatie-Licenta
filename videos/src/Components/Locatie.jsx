@@ -3,10 +3,13 @@ import { Link } from 'react-router-dom';
 import { Jumbotron, Row, Col, Button } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 import { Map, GoogleApiWrapper } from 'google-maps-react';
-
+import Navbar from "./Navbar";
 import './Locatie.css';
 
 export default class Locatie extends Component {
+    componentDidMount(){
+
+    }
     render() {
         return (
      <div>

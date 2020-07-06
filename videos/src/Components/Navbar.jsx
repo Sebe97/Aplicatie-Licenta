@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import { Link } from 'react-router-dom';
+import React, {Component } from 'react';
+import {  Link, Redirect } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import './Navbar.css';
-
+import Login from "./Login";
+import Despre from "./Despre";
+  
 
 import {
   Collapse,
   Navbar,
   NavbarToggler,
-  NavbarBrand,
   Nav,
   NavItem,
   NavLink,
@@ -17,104 +17,179 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText
 } from 'reactstrap';
 
-const Example = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
 
-  const toggle = () => setIsOpen(!isOpen);
 
-  return (
-    <div>
-       <Navbar color="light" light expand="md">
-        <NavbarToggler onClick={toggle} />
-        <Collapse isOpen={isOpen} navbar>
-          <Nav className="mr-auto col-md-12" navbar>
-          <a className="navbar-brand col-md-1" href="/">
-            <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
+
+
+
+export default class Example extends Component {
+  
+  constructor(props){
+    super(props);
+    this.logout = this.logout.bind(this);          
+    this.state={
+      userConfirmsLogOut:false,
+    }
+  } 
+    
+  
+    logout(){
+    
+      let yesOrNo = window.confirm("Doriti sa va delogati?"); // Prompt "yes" sau "no"
+      if(yesOrNo) // in cazul in care userul alege no, nu se intampla nimic
+      // daca se alege "yes" se va sterge din memoria browserului userul
+      {
+        this.setState({userConfirmsLogOut: yesOrNo})
+        localStorage.removeItem("userSession")
+      }
+    }
+  render(){
+    const{
+      userConfirmsLogOut,
+    } = this.state
+    // const [isOpen, setIsOpen] = useState(false);    // functii pentru afisaz telefon ( collapse navbar )
+    // const toggle = () => setIsOpen(!isOpen);
+  
+    return (
+      <div id ="navbar">
+        
+      {userConfirmsLogOut && <Redirect to={"/Login"} />} 
+      {/*  in momoentul in care se apasa pe logout => redirect la login */}
+      <div>
+        <Navbar color="light" light expand="md">
+          <NavbarToggler onClick={true} />
+          <Collapse isOpen={true} navbar>
+            <Nav className="mr-auto col-md-12" navbar>
+            <a className="navbar-brand col-md-1" href="/">
+              <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
+            </a>
+              
+              <NavItem href="/Despre">
+                <NavLink>
+                  <Link to="/Despre">
+                      Despre
+                  </Link>
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink >
+                  <Link to="/Programare">
+                    Programare noua
+                  </Link>
+                </NavLink>
+              </NavItem>
+
+              <NavItem>
+                <NavLink >
+                  <Link to="/RaportProgramari">
+                    Toate progrmarile
+                  </Link>
+                </NavLink>
+              </NavItem>
+
+              <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>
+                  Servicii
+                </DropdownToggle>
+                <DropdownMenu right>
+                
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/ImplantDentar">
+                          Implant Dentar
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/Pedodontie">
+                          Pedodontie
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+                  
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/Protetica">
+                          Protetica
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+
+                  
+                </DropdownMenu>
+                
+              </UncontrolledDropdown>
+              <NavItem>
+                <NavLink >
+                <button  onClick = {this.logout}  >Logout</button>
+                      
+                </NavLink>
+              </NavItem>
+            </Nav>
+            {/* <NavbarText>
+              <h1>Programari la: 0747691012</h1></NavbarText> */}
+          </Collapse>
+        </Navbar> 
+  {/* <nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
+    <a class="navbar-brand col-md-1" href="/">
+      <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
+
+    </a>
+
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse  col-md-11" id="navbarNavDropdown">
+      <ul class="navbar-nav " style = {{"width": "100%",   "flex-wrap": "wrap"}}>
+        <li class="nav-item  col-md-1">
+          <a class="nav-link" href="/Despre">Despre</a>
+        </li>
+        <li class="nav-item col-md-1">
+          <a class="nav-link" href="/Contact">Contact</a>
+        </li>
+        <li class="nav-item col-md-1">
+          <a class="nav-link" href="/Locatie">Loctie</a>
+        </li>
+        <li class="nav-item dropdown col-md-2">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Servicii
           </a>
-            
-            <NavItem href="/Despre">
-              <NavLink>
-                <Link to="/Despre">
-                    Despre
-                </Link>
-              </NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink >
-                <Link to="/Programare">
-                  Programare
-                </Link>
-              </NavLink>
-            </NavItem>
-            <UncontrolledDropdown nav inNavbar>
-              <DropdownToggle nav caret>
-                Servicii
-              </DropdownToggle>
-              <DropdownMenu right>
-                <DropdownItem>                  Stomatologie Generala                </DropdownItem>
-                <DropdownItem>                  Implant Dentar                       </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-                <DropdownItem>                  Urgente Stomatologice                </DropdownItem>
-              </DropdownMenu>
-            </UncontrolledDropdown>
-          </Nav>
-          {/* <NavbarText>
-            <h1>Programari la: 0747691012</h1></NavbarText> */}
-        </Collapse>
-      </Navbar> 
-{/* <nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
-  <a class="navbar-brand col-md-1" href="/">
-    <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
-
-  </a>
-
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse  col-md-11" id="navbarNavDropdown">
-    <ul class="navbar-nav " style = {{"width": "100%",   "flex-wrap": "wrap"}}>
-      <li class="nav-item  col-md-1">
-        <a class="nav-link" href="/Despre">Despre</a>
-      </li>
-      <li class="nav-item col-md-1">
-        <a class="nav-link" href="/Contact">Contact</a>
-      </li>
-      <li class="nav-item col-md-1">
-        <a class="nav-link" href="/Locatie">Loctie</a>
-      </li>
-      <li class="nav-item dropdown col-md-2">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Servicii
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
-        </div>
-      </li>
-      <li class="col-md-4">
-      </li>
-      <li class="d-flex justify-content-end">
-        <a class="" href="#"><h5>Programari la: 0747691012</h5></a>
-      </li>
-    </ul>
-  </div>
-</nav> */}
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="col-md-4">
+        </li>
+        <li class="d-flex justify-content-end">
+          <a class="" href="#"><h5>Programari la: 0747691012</h5></a>
+        </li>
+      </ul>
+    </div>
+  </nav> */}
 
 
 
 
-</div>
-  );
-}
-
-export default Example;
+     </div>
+  
+    </div>
+    );
+  }
+ }
