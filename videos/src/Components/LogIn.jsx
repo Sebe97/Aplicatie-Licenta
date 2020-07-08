@@ -29,7 +29,7 @@ export default class Login extends Component {
     }
 
    componentDidMount(){
-
+    
    }
 
        getFromStorage(key) { // functie folosita pentru a cauta ceva in local storate pe baza cheii
@@ -78,29 +78,13 @@ export default class Login extends Component {
         
          // credentialele cu care se incearca logarea
         const currentUser = { 
-            // user      :this.state.user,
-            // parola    :this.state.parola,
-          
                 user: user,
                 parola: parola,
            
         }
-        // console.log("User",currentUser);
-        // axios.post('http://localhost:5000/account/signin', currentUser)  // verificam daca exista in baza de date acest user
-        // .then(response => {
-        //     alert("Logarea s-a efectuat cu succes");
-        //     })
-        //     .catch((error) => {
-        //         alert ( "err")
-        //         console.log(error);
-        //     })
-
-
-
+       
         axios.post('http://localhost:5000/account/signin', currentUser) 
         .then(response => {
-            console.log("response");
-            console.log(response);
             if(response.data.success == true){
 
                 localStorage.setItem("userSession",response.data.id)
@@ -146,12 +130,12 @@ export default class Login extends Component {
                             <div class="form-group col-md-6">
                                 <input type="text" onChange={this.onChangeParola} value={this.state.parola} class="form-control" placeholder="Parola *" />
                             </div>
-                            <input type="submit" class="btnSubmit"/>
+                            <input type="submit" class="button"/>
 
                         </form>
                             <a href = {"/Signup"}>
-                            <button class=" btnSubmit " >Cont nou</button >
-                            {/* <button class=" btnSubmit contNou" onClick = {(e)=>{  e.preventDefault(); this.setState({contNou:true})}}>Cont nou</button > */}
+                             <button class="button " >Cont nou</button >
+                               {/* <button class=" btnSubmit contNou" onClick = {(e)=>{  e.preventDefault(); this.setState({contNou:true})}}>Cont nou</button > */}
                             </a>
                     </div>
                     

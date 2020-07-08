@@ -22,7 +22,8 @@
 .colImagineAcasa{
     height: 400px;
     width: 1200px;
-    background-image: url('../images/acasa.jpg');
+    background-image: url("https://www.nectarie6.ro/thumb/800/300/27-dentistry.jpg");
+    /* background-image: url('../images/acasa.jpg'); */
     background-size: cover;
     position: relative;
 }

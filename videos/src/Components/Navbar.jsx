@@ -59,22 +59,24 @@ export default class Example extends Component {
       {/*  in momoentul in care se apasa pe logout => redirect la login */}
       <div>
         <Navbar color="light" light expand="md">
+          <div className="navbarPArent" >
+
           <NavbarToggler onClick={true} />
           <Collapse isOpen={true} navbar>
             <Nav className="mr-auto col-md-12" navbar>
             <a className="navbar-brand col-md-1" href="/">
               <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
             </a>
-              
-              <NavItem href="/Despre">
-                <NavLink>
-                  <Link to="/Despre">
-                      Despre
-                  </Link>
-                </NavLink>
-              </NavItem>
 
-              <NavItem>
+                <NavItem className="navbarItem" href="/Despre">
+                   <NavLink>
+                    <Link to="/Despre">
+                        Despre
+                    </Link>
+                  </NavLink>
+                 </NavItem> 
+
+              <NavItem className = "navbarItem">
                 <NavLink >
                   <Link to="/Programare">
                     Programare noua
@@ -82,7 +84,7 @@ export default class Example extends Component {
                 </NavLink>
               </NavItem>
 
-              <NavItem>
+              <NavItem className = "navbarItem">
                 <NavLink >
                   <Link to="/RaportProgramari">
                     Toate progrmarile
@@ -90,12 +92,39 @@ export default class Example extends Component {
                 </NavLink>
               </NavItem>
 
-              <UncontrolledDropdown nav inNavbar>
+
+              <NavItem className = "navbarItem">
+                <NavLink >
+                  <Link to="/RaportUsers">
+                    Useri
+                  </Link>
+                </NavLink>
+              </NavItem>
+
+
+
+
+
+
+              <UncontrolledDropdown nav inNavbar className = "navbarItem">
                 <DropdownToggle nav caret>
                   Servicii
                 </DropdownToggle>
                 <DropdownMenu right>
                 
+              
+                  
+                <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/StomatologieGenerala">
+                          StomatologieGenerala
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+
                   <DropdownItem>                
                     <NavItem>
                       <NavLink >
@@ -129,27 +158,77 @@ export default class Example extends Component {
                   </DropdownItem>
 
 
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/Radiologie">
+                          Radiologie
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/ChirurgieOMF">
+                          Chirurgie OMF
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/Parodontologie">
+                          Estetica Dentara
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
+
+                  <DropdownItem>                
+                    <NavItem>
+                      <NavLink >
+                        <Link to="/Parodontologie">
+                          Parodontologie
+                        </Link>
+                      </NavLink>
+                    </NavItem>        
+                  </DropdownItem>
                   
                 </DropdownMenu>
                 
               </UncontrolledDropdown>
-              <NavItem>
+
+
+              <NavItem className="navbarItem" onClick = {this.logout}>
                 <NavLink >
-                <button  onClick = {this.logout}  >Logout</button>
+                  <Link to="#">
+                    LogOut
+                  </Link>
+                </NavLink>
+              </NavItem>   
+              
+              {/* <NavItem>
+                <NavLink >
+                <button className = "navbarItem"  onClick = {this.logout}  >Logout</button>
                       
                 </NavLink>
-              </NavItem>
+              </NavItem> */}
             </Nav>
             {/* <NavbarText>
               <h1>Programari la: 0747691012</h1></NavbarText> */}
           </Collapse>
+              </div>
         </Navbar> 
   {/* <nav class="navbar navbar-expand-lg navbar-light bg-light col-md-12">
     <a class="navbar-brand col-md-1" href="/">
-      <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
-
+    <Image src={require('../images/logo.png')} circle className="rounded-circle imagineLogo" />
+    
     </a>
-
+    
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>

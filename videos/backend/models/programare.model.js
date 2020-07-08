@@ -3,11 +3,12 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const programareSchema = new Schema({
-    nume    : String,
-    telefon : String,
-    data    : String,
-    ora     : String,
-    user    : String,
+    afectiune    : String,
+    telefon      : String,
+    data         : String,
+    ora          : String,
+    user         : String,
+    userName     : String,
 },
 {
     timestamps:true,

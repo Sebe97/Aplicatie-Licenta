@@ -11,8 +11,11 @@ router.route('/').get((req, res) => {
 
 
 router.route('/getSorted').get((req, res) => {
-    Programare.find().sort({data:1})
-    .then(programari => res.json(programari))
+    Programare.find().sort({data:1,ora:1})
+    .then(programari =>{
+        
+        return res.json(programari)
+    })
     .catch(err => res.status(400).json('Error: ' +err));
 });
 
@@ -23,7 +26,6 @@ router.route('/deleteOne').post((req, res) => {
            if(err)  res.json(err)
            else res.json("Programarea a fost stearsa")
        })
-       
 });
 
 
@@ -36,7 +38,6 @@ router.route('/getSortedStartingToday').get((req, res) => {
     month = Number(month +1);
     month = month < 10 ? '0'+ month : month
     let astaziFormatat = month + '-' + day + '-' + year
-    // console.log(astaziFormatat);
     
     
     Programare.find({ "data": { "$gte": astaziFormatat } }).sort({data:1})
@@ -91,11 +92,9 @@ router.route('/getSpecificDay').post((req, res) => {
 
 router.route('/getBySpecificUser').post((req, res) => {
     
-    console.log(req.body.idUser);
     
     Programare.find({user:req.body.idUser})
     .then(programari => {
-        console.log(programari);
         
        return res.json(programari)
     })
@@ -104,12 +103,14 @@ router.route('/getBySpecificUser').post((req, res) => {
 
 
 router.route('/add').post((req, res) => {
+    
     const newProgramare = new Programare({
-         nume   :req.body.nume,
-         telefon:req.body.telefon,
-         data   :req.body.data,
-         ora    :req.body.ora,
-         user   :req.body.userId,
+         afectiune  :req.body.afectiune,
+         telefon    :req.body.telefon,
+         data       :req.body.data,
+         ora        :req.body.ora,
+         user       :req.body.userId,
+         userName   :req.body.userName,
         })
     newProgramare.save()
     .then(programari => res.json('Programare Adaugata'))
@@ -119,7 +120,6 @@ router.route('/add').post((req, res) => {
 
 router.route('/data').post((req, res) => {
     const {data} = req.body // ia variabila "data" din body
-    // console.log("data aici== " , data); 
     
     Programare.find({data:data})
     .then(programare => res.json(programare))

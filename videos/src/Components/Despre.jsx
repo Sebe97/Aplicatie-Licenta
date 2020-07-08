@@ -41,23 +41,24 @@ export default class Despre extends Component {
                     </Jumbotron>
                     <Row className = "show-grid text-center">
                                 <Col xs={4} md={4} className = "person-wrapper">
-                                    <Image src={require('../images/grati1.jpg')}  circle className= "rounded-circle" />
+                                    <Image src={'https://images.theconversation.com/files/304957/original/file-20191203-66986-im7o5.jpg?ixlib=rb-1.1.0&q=45&auto=format&w=926&fit=clip'}  circle className= "doctorsImg rounded-circle" />
+                                    {/* <Image src={require('../images/grati1.jpg')}    circle className= "rounded-circle" /> */}
                                     <h3>
                                     <a href="https://www.facebook.com/gratiela.baciu">Gratiela Baciu</a>
                                     </h3>
-                                    <p>Ceva despre acest dotor Ceva despre acest dotor Ceva despre acest dottor Ceva despre acest dotor</p>
+                                    <p style = {{color:"white"}}>Am foarte puţine modele în viaţă, însă domnul doctor Adrian Stanciu este unul. „Salvatorul de vieți” părăsește „Marie Curie”</p>
                                 </Col>  
 
                                 <Col xs={4} md={4} className="person-wrapper">
-                                    <Image src={require('../images/grati1.jpg')}   circle className= "rounded-circle" />
+                                    <Image src={"https://admin.doctors-365.de/Content/Doctors/ada6c780-7f6c-4cc0-ac99-3fdbb318bf71.jpg"}   circle className= "doctorsImg    rounded-circle" />
                                     <h3>Doctor 2</h3>
-                                    <p>Ceva despre acest dotor Cevast dotor Ceva despre acest dotor Ceva despre acest Ceva despre acest dotor</p>
+                                    <p style = {{color:"white"}}>Sunt foarte bucuroasa ca am ales sa fac operatia cu dl dr Ionescu, dintre toate optiunile pe care le-am avut. Am mers la dlui, inca de la primul consult, cu inima deschisa si am avut tot timpul sentimentul ca ceea ce vreau sa fac este ceea ce trebuie facut.</p>
                                 </Col>  
 
                                 <Col xs={4} md={4} className="person-wrapper"> 
-                                    <Image src={require('../images/grati1.jpg')}    circle className= "rounded-circle" />
+                                    <Image src={"https://clinicadentaltrilla.com/wp-content/uploads/2015/11/doktorka.png"}    circle className= "doctorsImg rounded-circle" />
                                     <h3>Doctor 3</h3>
-                                    <p>Ceva despre acest dotor Ceva despre acest dotor Ceva dotor Ceva despre acest dotor Ceva despre acest dotor</p>
+                                    <p style = {{color:"white"}}>Am foarte puţine modele în viaţă, însă domnul doctor Adrian Stanciu este unul. „Salvatorul de vieți” părăsește „Marie Curie”</p>
                                 </Col>  
                     </Row>
 

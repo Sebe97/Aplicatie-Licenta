@@ -1,0 +1,12 @@
+.datePicker{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.inputButtonWrapper{
+    border: darkgray 3px solid;
+    border-radius: 10px;
+    margin-right: 10px;
+    padding :10px;
+}

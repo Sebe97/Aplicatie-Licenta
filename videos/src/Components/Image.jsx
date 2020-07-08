@@ -13,7 +13,7 @@ export default class ImagineDescriere extends Component {
         return (
             <div>
                 <Image src={pathImagine} circle className="rounded-circle" />
-                <h3><a href="#">{nume}</a></h3>
+                <h3><a href={nume.replace(/\s/g, '')}>{nume}</a></h3>
                 <p> {descriere}</p>
             </div>
         )

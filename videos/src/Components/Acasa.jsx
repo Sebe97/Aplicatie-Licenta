@@ -64,7 +64,6 @@ export default class Acasa extends Component{
         
     }
 
-
     render(){
 
         const{token=""} =  this.state
@@ -73,7 +72,6 @@ export default class Acasa extends Component{
         
         return(
             <div>
-
                { !token && <Login/>}
                { token&&
                <div>
@@ -125,8 +123,8 @@ export default class Acasa extends Component{
                                         </div>
                                     </Col>
                                     <Col xs={4} md={4} className = "sidebar-section">
-                                        <Image src={require('../images/grati1.jpg')}/>
-                                        <p>DR. Baciu Gratiela</p>
+                                        <Image src={"https://www.drlupu.ro/images/galerie/3.jpg"}/>
+                                        <p>Echipa noastra</p>
                                     </Col>
                                 </Row>
                             </div>

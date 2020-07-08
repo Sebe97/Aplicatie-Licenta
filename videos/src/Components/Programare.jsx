@@ -13,19 +13,21 @@ export default class Programare extends Component {
     
             constructor(props){
                 super(props);
-                this.onChangeNume    = this.onChangeNume.bind(this);          
+                this.onChangeAfectiune    = this.onChangeAfectiune.bind(this);          
                 this.onChangeTelefon = this.onChangeTelefon.bind(this);   
                 this.onChangeData    = this.onChangeData.bind(this);          
                 this.onChangeOra     = this.onChangeOra.bind(this);          
                 
                 this.onsubmit = this.onsubmit.bind(this);        
                 this.state={
-                    nume          : "",
+                    afectiune     : "",
                     telefon       : "",
                     data          : new Date(),
-                    ora           : "",
+                    ora           : "08",
                     oreDisponibile: [],
-                    token         :"",
+                    token         : "",
+                    user          : "",
+                    userName      : "",
                 }
     
             }
@@ -39,17 +41,46 @@ export default class Programare extends Component {
                 
                 axios.post('  http://localhost:5000/account/getUserByToken',{token}) // aducem inregistrarile din data aleasa
               .then(res =>{
-                  console.log("res al get all users");
-                  console.log(res);
+                  console.log("res al get all users", res.data[0].firstName+" "+res.data[0].lastName);
+                  this.setState({userName :res.data[0].firstName+" "+res.data[0].lastName})
                   
               })
+
+              let oreDejaOcupate = [];
+                let dataFormatata = format(new Date(),"MM-dd-yyyy")
+                let bodyReq = {"data":dataFormatata}
+                
+                axios.post('http://localhost:5000/programari/data',bodyReq) // aducem inregistrarile din data aleasa
+                .then(response => {
+                    // console.log("ASta imi aduce din baza de date: ",response.data);
+                    
+                    if(response.data.length > 0){ // daca exista inregistrari in baza de date
+                        response.data.forEach((el)=>{  // gasim (datele == data selectata) si punem in vectorul   oreDejaOcupate   toate orele acestor date
+                                const oraCurenta = el.ora; // ora inregistrarii curente
+                                oreDejaOcupate.push(oraCurenta);
+                                
+                            })
+                        }
+                        
+                        let toateOrele = ['08','09','10','11','12','13','14','15','16','17'];
+                        let oreDisponibileAux = toateOrele.filter(function(obj) { return oreDejaOcupate.indexOf(obj) == -1; });
+                        console.log('oreDisponibileAux' ,oreDisponibileAux);
+                        
+                        this.setState({
+                            oreDisponibile: oreDisponibileAux,
+                            ora:oreDisponibileAux[0],
+                        })
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                    })
 
               }
 
             // Functii onChange 
-            onChangeNume(e){
+            onChangeAfectiune(e){
                 this.setState({
-                    nume: e.target.value
+                    afectiune: e.target.value
                 })
             }
     
@@ -128,39 +159,48 @@ export default class Programare extends Component {
 
 
             onsubmit(e){ // functia pentru submit formular
+                
                 e.preventDefault();
                 const{
                     token,
+                    userName,
                 } = this.state
-                console.log('token==', token);
-               
+                
+                console.log('userName==', userName);
+             
                 const programare = { 
-                    nume    :this.state.nume,
-                    telefon :this.state.telefon,
-                    data    :format(new Date(this.state.data),"MM-dd-yyyy"),
-                    ora     :this.state.ora,
-                    userId    :token,
-                }
+                    afectiune    :this.state.afectiune,
+                    telefon      :this.state.telefon,
+                    data         :format(new Date(this.state.data),"MM-dd-yyyy"),
+                    ora          :this.state.ora,
+                    userId       :token,
+                    userName     :userName,
+                }    
 
                // posteaza catre server
                 axios.post(' http://localhost:5000/programari/add', programare) 
-                .then(res => console.log(res.data))
+                .then(res =>{
+
+                 console.log(res.data)
+                })
               //  END posteaza catre server
 
                 this.setState({
-                    nume    :"",
-                    telefon :"",
-                    data    :"",
-                    ora     :"",
-                    user    :"",
+                    afectiune    :"",
+                    telefon      :"",
+                    user         :"",
+                    userName     :"",
                 })
+                
             }// END functia pentru submit formular
            
         render() {
 
         const {
-            token="",
-            oreDisponibile=[],   // aici am orele din baza de date ( orele pentru care deja s-a facut programare )
+            token           ="",
+            ore             = '08',
+            oreDisponibile  =[],   // aici am orele din baza de date ( orele pentru care deja s-a facut programare )
+
         } = this.state;
         
         console.log("oreDisponibile");
@@ -173,34 +213,51 @@ export default class Programare extends Component {
                      <div>
                          <Navbar/>
                             <div class="form">
-                                <div class="note">
+                                <div class="note" style={{"background":  "#737373"}}>
                                     <p>Programeaza-te.</p>
                                 </div>
 
                                 <form onSubmit={this.onsubmit} class="form-content">
                                     <div class="row">
 
-                                        <div class="col-md-12">
-                                            <div class="form-group col-md-6">
-                                                <input type="text" onChange={this.onChangeNume} value={this.state.nume} class="form-control" placeholder="Numele Tau *" />
+                                        <div className="col-md-12">
+
+                                            <div className="col-md-6 d-flex">
+                                                <label  className="col-md-2 d-flex">Afectiunea: </label>
+                                                <div className="form-group col-md-4">
+                                                    <input type="text" required onChange={this.onChangeAfectiune} value={this.state.afectiune} class="form-control" placeholder="Afectiunea*" />
+                                                </div>
                                             </div>
-                                            <div class="form-group col-md-6">
-                                                <input type="text"  onChange={this.onChangeTelefon} value={this.state.telefon}class="form-control" placeholder="Telefon *"/>
+
+                                            <div className="col-md-6 d-flex">
+                                                <label  className="col-md-2 d-flex">Telefon: </label>
+                                                <div className="form-group col-md-4">
+                                                    <input required className="col-md-1 d-flex"  type="text"  onChange={this.onChangeTelefon} value={this.state.telefon}class="form-control" placeholder="Telefon *"/>
+                                                </div>
                                             </div>
-                                            <div class="form-grou col-md-12 d-flex">
-                                                <DatePicker
-                                                className="form-control col-md-6"
-                                                selected = {this.state.data}
-                                                onChange ={this.onChangeData}
-                                                todayButton="Vandaag"
-                                                dateFormat="MM-dd-yyyy"
-                                                />
-                                            <div>
-                                                <div className="form-group d-flex"> 
-                                                    <label>Ora: </label>
+
+                                            <div class="form-grou col-md-6 d-flex ">
+                                                <label className="col-md-2  d-flex">Alegeti Data: </label>
+                                                <div className="form-group col-md-4 d-flex">
+                                                    <DatePicker
+                                                        className="form-control col-md-12"
+                                                        selected = {this.state.data}
+                                                        onChange ={this.onChangeData}
+                                                        todayButton="Vandaag"
+                                                        dateFormat="MM-dd-yyyy"
+                                                    />
+                                                </div>
+                                               
+
+                                            </div>
+
+                                            <div className="form-group  col-md-6 d-flex"> 
+                                                <label  className="col-md-2 d-flex">Ora: </label>
+                                               
+                                                <div className="form-group col-md-4 d-flex">
                                                     <select ref="programareInput"
                                                         required
-                                                        className="form-control"
+                                                        className="form-control col-md-12"
                                                         value={this.state.ora}
                                                         onChange={this.onChangeOra}>
                                                         {
@@ -213,11 +270,11 @@ export default class Programare extends Component {
                                                         }
                                                     </select>
                                                 </div>
+
                                             </div>
-                                            </div>
-                                        </div>
                                     </div>
-                                <input type="submit" class="btnSubmit"/>
+                                    </div>
+                                <input type="submit" className="button"/>
                                 </form>
                             </div>
                         </div>

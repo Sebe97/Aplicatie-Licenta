@@ -50,8 +50,6 @@ export default class Programare extends Component {
 
         const {
         } = this.state;
-
-        
         
         const newUser = { 
             nume      :this.state.nume,
@@ -59,21 +57,26 @@ export default class Programare extends Component {
             user      :this.state.user,
             parola    :this.state.parola,
         }
-        console.log("User",newUser);
         axios.post('http://localhost:5000/account/signup', newUser) 
         .then(response => {
-            alert("Userul a fost adaugat");
-            this.setState({logat :true})
-            })
-            .catch((error) => {
-                console.log(error);
-            })
-
-     
-
+            // console.log(response.data.success); success == true => userul nu exista
+            // console.log(response.data.success); success == false => userul deja exista
+            if (response.data.success==true) {
+                alert("Userul a fost adaugat");
+                this.setState({logat :true})
+            }
+            else{
+                alert("Userul deja exista");
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
     }
 
         componentDidMount(){
+                    
+            console.log("pagina de signup/ cont nou");
 
         }
     
@@ -108,11 +111,11 @@ export default class Programare extends Component {
                             <div class="form-group col-md-6">
                                 <input type="text" onChange={this.onChangeParola} value={this.state.parola} class="form-control" placeholder="Parola *" />
                             </div>
-                            <input type="submit" class="btnSubmit"/>
+                            <input type="submit" class="button"/>
 
                         </form>
-                        <a href = {"/Login"}>
-                            <button class=" btnSubmit " >Back</button >
+                        <a  href = {"/Login"}>
+                            <button class=" button " >Back</button >
                             </a>
                     </div>
                 }

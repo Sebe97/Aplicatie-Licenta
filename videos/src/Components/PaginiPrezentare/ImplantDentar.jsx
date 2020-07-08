@@ -6,7 +6,7 @@ import Image from 'react-bootstrap/Image';
 // import { Map, GoogleApiWrapper } from 'google-maps-react';
 import Navbar from "../Navbar";
 import PaginaPrezentare from "./PaginaPrezentare";
-import './ImplantDentar.css';
+import './PaginaPrezentare.css';
 
 export default class ImplantDentar extends Component {
    
