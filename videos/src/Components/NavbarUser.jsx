@@ -2,8 +2,6 @@ import React, {Component } from 'react';
 import {  Link, Redirect } from 'react-router-dom';
 import Image from 'react-bootstrap/Image';
 import './Navbar.css';
-import Login from "./Login";
-import Despre from "./Despre";
   
 
 import {
@@ -24,7 +22,7 @@ import {
 
 
 
-export default class Example extends Component {
+export default class ExampleUser extends Component {
   
   constructor(props){
     super(props);
@@ -86,25 +84,11 @@ export default class Example extends Component {
 
               <NavItem className = "navbarItem">
                 <NavLink >
-                  <Link to="/RaportProgramari">
+                  <Link to="/RaportProgramariUser">
                     Toate progrmarile
                   </Link>
                 </NavLink>
               </NavItem>
-
-
-              <NavItem className = "navbarItem">
-                <NavLink >
-                  <Link to="/RaportUsers">
-                    Useri
-                  </Link>
-                </NavLink>
-              </NavItem>
-
-
-
-
-
 
               <UncontrolledDropdown nav inNavbar className = "navbarItem">
                 <DropdownToggle nav caret>
@@ -205,7 +189,7 @@ export default class Example extends Component {
 
               <NavItem className="navbarItem" onClick = {this.logout}>
                 <NavLink >
-                  <Link>
+                  <Link to="#">
                     LogOut
                   </Link>
                 </NavLink>

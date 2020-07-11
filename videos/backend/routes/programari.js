@@ -68,7 +68,6 @@ router.route('/getToday').get((req, res) => {
 });
 
 
-
 router.route('/getSpecificDay').post((req, res) => {
     
     var astazi = new Date(req.body.astazi);

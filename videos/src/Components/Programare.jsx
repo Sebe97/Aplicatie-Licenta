@@ -4,6 +4,8 @@ import './Programare.css';
 import './Despre.css';
 import Login from "./Login";
 import Navbar from "./Navbar";
+import NavbarUser from "./NavbarUser";
+
 import axios from 'axios';
 import { format, excludeTimes, setHours, setMinutes } from 'date-fns'
 import DatePicker from 'react-datepicker';
@@ -13,21 +15,22 @@ export default class Programare extends Component {
     
             constructor(props){
                 super(props);
-                this.onChangeAfectiune    = this.onChangeAfectiune.bind(this);          
-                this.onChangeTelefon = this.onChangeTelefon.bind(this);   
-                this.onChangeData    = this.onChangeData.bind(this);          
-                this.onChangeOra     = this.onChangeOra.bind(this);          
+                this.onChangeAfectiune      = this.onChangeAfectiune.bind(this) ;          
+                this.onChangeTelefon        = this.onChangeTelefon.bind(this)   ;   
+                this.onChangeData           = this.onChangeData.bind(this)      ;          
+                this.onChangeOra            = this.onChangeOra.bind(this)       ;          
                 
                 this.onsubmit = this.onsubmit.bind(this);        
                 this.state={
-                    afectiune     : "",
-                    telefon       : "",
-                    data          : new Date(),
-                    ora           : "08",
-                    oreDisponibile: [],
-                    token         : "",
-                    user          : "",
-                    userName      : "",
+                    afectiune     : ""          ,
+                    telefon       : ""          ,
+                    data          : new Date()  ,
+                    ora           : "08"        ,
+                    oreDisponibile: []          ,
+                    token         : ""          ,
+                    admin         : "false"     ,
+                    user          : ""          ,
+                    userName      : ""          ,
                 }
     
             }
@@ -35,13 +38,15 @@ export default class Programare extends Component {
             componentDidMount() {
 
                 const token = localStorage.getItem("userSession");
+                const admin = localStorage.getItem("Admin");
                 this.setState({
                     token ,
+                    admin ,
                 })
                 
                 axios.post('  http://localhost:5000/account/getUserByToken',{token}) // aducem inregistrarile din data aleasa
               .then(res =>{
-                  console.log("res al get all users", res.data[0].firstName+" "+res.data[0].lastName);
+                  if(res.data[0].firstName && res.data[0].lastName)
                   this.setState({userName :res.data[0].firstName+" "+res.data[0].lastName})
                   
               })
@@ -64,7 +69,6 @@ export default class Programare extends Component {
                         
                         let toateOrele = ['08','09','10','11','12','13','14','15','16','17'];
                         let oreDisponibileAux = toateOrele.filter(function(obj) { return oreDejaOcupate.indexOf(obj) == -1; });
-                        console.log('oreDisponibileAux' ,oreDisponibileAux);
                         
                         this.setState({
                             oreDisponibile: oreDisponibileAux,
@@ -124,7 +128,6 @@ export default class Programare extends Component {
                 
                 axios.post('http://localhost:5000/programari/data',bodyReq) // aducem inregistrarile din data aleasa
                 .then(response => {
-                    // console.log("ASta imi aduce din baza de date: ",response.data);
                     
                     if(response.data.length > 0){ // daca exista inregistrari in baza de date
                         response.data.forEach((el)=>{  // gasim (datele == data selectata) si punem in vectorul   oreDejaOcupate   toate orele acestor date
@@ -136,7 +139,6 @@ export default class Programare extends Component {
                         
                         let toateOrele = ['08','09','10','11','12','13','14','15','16','17'];
                         let oreDisponibileAux = toateOrele.filter(function(obj) { return oreDejaOcupate.indexOf(obj) == -1; });
-                        console.log('oreDisponibileAux' ,oreDisponibileAux);
                         
                         this.setState({
                             oreDisponibile: oreDisponibileAux,
@@ -164,10 +166,9 @@ export default class Programare extends Component {
                 const{
                     token,
                     userName,
+                    oreDisponibile = "08",
                 } = this.state
                 
-                console.log('userName==', userName);
-             
                 const programare = { 
                     afectiune    :this.state.afectiune,
                     telefon      :this.state.telefon,
@@ -181,37 +182,42 @@ export default class Programare extends Component {
                 axios.post(' http://localhost:5000/programari/add', programare) 
                 .then(res =>{
 
-                 console.log(res.data)
-                })
-              //  END posteaza catre server
-
-                this.setState({
-                    afectiune    :"",
-                    telefon      :"",
-                    user         :"",
-                    userName     :"",
                 })
                 
+                let oreRamase = oreDisponibile
+                let nimic = oreRamase.indexOf(this.state.ora) > -1 ? oreRamase.splice(oreRamase.indexOf(this.state.ora), 1) : oreRamase
+                console.log(oreRamase)
+              //  END posteaza catre server
+
+                this.setState({             
+                    afectiune        :"",
+                    telefon          :"",
+                    // user             :"",
+                    // userName         :"",
+                    // data             :format(new Date(this.state.data),"MM-dd-yyyy"),
+                    ora              :oreRamase[0],
+                    oreDisponibile   :oreRamase,
+                })
+
             }// END functia pentru submit formular
            
         render() {
 
         const {
-            token           ="",
+            token           = "",
+            admin           = "false",
             ore             = '08',
-            oreDisponibile  =[],   // aici am orele din baza de date ( orele pentru care deja s-a facut programare )
+            oreDisponibile  = [],   // aici am orele din baza de date ( orele pentru care deja s-a facut programare )
 
         } = this.state;
-        
-        console.log("oreDisponibile");
-        console.log(oreDisponibile);
-        
+               
         return (
             <div>
                 { !token && <Login/>}
                 { token&&
                      <div>
-                         <Navbar/>
+                        { admin == "true" && <Navbar/>}
+                        { admin == "false" && <NavbarUser/>}
                             <div class="form">
                                 <div class="note" style={{"background":  "#737373"}}>
                                     <p>Programeaza-te.</p>

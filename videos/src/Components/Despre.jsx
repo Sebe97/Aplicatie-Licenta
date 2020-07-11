@@ -3,6 +3,8 @@ import { Jumbotron, Row, Col } from 'react-bootstrap';
 import Image from 'react-bootstrap/Image';
 
 import Navbar from "./Navbar";
+import NavbarUser from "./NavbarUser";
+
 import './Despre.css';
 import Login from "./Login";
 import { Pagination } from 'reactstrap';
@@ -12,6 +14,7 @@ export default class Despre extends Component {
          
         this.state={
             token: "",
+            admin: "false",
        
         }
 
@@ -23,19 +26,25 @@ export default class Despre extends Component {
         
 
         const token = localStorage.getItem("userSession");
+        const admin = localStorage.getItem("Admin");
         this.setState({
             token ,
+            admin ,
         })
     }
     render() {
-        const{token=""} =  this.state
+        const{
+            token="",
+            admin = "false",
+        } =  this.state
 
         return (
             <div>
             { !token && <Login/>}
             { token&&
                 <div>
-                 <Navbar/>
+               { admin == "true" && <Navbar/>}
+               { admin == "false" && <NavbarUser/>}
                     <Jumbotron>
                         <div class="sppb-addon-content"><strong>Tratament endodontic</strong>: dezinfecţia sistemului endodontic<br></br><strong>Hemostază</strong><br></br><strong>Tratamentul herpesului, aftelor bucale</strong> cu diminuarea durerii resimțite de pacient<br></br><strong>Expunerea dinţilor neerupti<br></br>Terapia durerii/Biostimulare -&nbsp;</strong>sistem muscular, sistem osos<br></br><strong>Albire dentară profesională<br></br><br></br>Indicații biostimulare:<br></br><br></br><br></br></strong>- după orice intervenție chirurgicală (grăbește vindecarea , scade inflamația)<br></br>- după activarea aparatului ortodontic<br></br>- in cazul trismusului (imposibilitatea deschiderii gurii)<br></br>- patologia articulației temporo-mandibulare ( artrite, artroze)<br></br><br></br><strong>Albirea dentară cu laserul Epic X:<br></br></strong>&nbsp;<br></br>Procedura albirii cu laserul Epic X este extrem de simplă, rapidă, sigură și confortabilă: - se aplică un gel de albire pe bază de peroxid de hidrogen activat de laser<br></br>- albirea dentară cu laser este cea mai puțin invazivă metodă de albire a dinților&nbsp; <br></br>- numără o multitudine de beneficii comparativ cu albirea clasică<br></br>- smalțul este penetrat rapid de substanța de albire, iar contactul dintre acesta și gelul de albire este de scurtă durată asigurând protecția dinților pe parcursul procedurii<br></br>- tratamentul de albire se realizează într-o singură ședință (maxim 20 de minute)<br></br>- rezultatele albirii cu laser durează mult mai mult decât în cazul abordării clasice cu gutiere sau prin fotopolimerizare<br></br>- absența sensibilității dentare post-procedură<br></br><br></br></div>
                     </Jumbotron>

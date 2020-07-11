@@ -5,9 +5,11 @@ import Acasa from './Components/Acasa';
 import Despre from './Components/Despre';
 import Programare from './Components/Programare';
 import Login from './Components/Login';
+import ResetareParola from './Components/ResetareParola';
 import Signup from './Components/Signup';
 import {Image} from 'react-bootstrap';
 import RaportProgramari from "./Components/RaportProgramari";
+import RaportProgramariUser from "./Components/RaportProgramariUser";
 import RaportUsers from "./Components/RaportUsers";
 import ImplantDentar from "./Components/PaginiPrezentare/ImplantDentar";
 import Pedodontie from "./Components/PaginiPrezentare/Pedodontie";
@@ -32,15 +34,16 @@ class App extends Component {
       <Router>
         <div className = "fullImage">
         <Image src={require('./images/pplSmiling.jpg')} className='imagineGenerala'/>                   
-
+      
           <div className = "wrapper">
             {/* <Navbar></Navbar> */}
             <Route exact path="/" component={Acasa}/>
             <Route exact path="/Despre" component={Despre}/>
             <Route exact path="/Programare" component={Programare}/>
             <Route exact path="/Login" component={Login}/>
-            <Route exact path="/Signup" component={Signup}/>
+            <Route  path="/Signup" component={Signup}/>
             <Route exact path="/RaportProgramari" component={RaportProgramari}/>
+            <Route exact path="/RaportProgramariUser" component={RaportProgramariUser}/>
             <Route exact path="/ImplantDentar" component={ImplantDentar}/>
             <Route exact path="/Pedodontie" component={Pedodontie}/>
             <Route exact path="/Protetica" component={Protetica}/>
@@ -50,6 +53,7 @@ class App extends Component {
             <Route exact path="/EsteticaDentara" component={EsteticaDentara}/>
             <Route exact path="/Parodontologie" component={Parodontologie}/>
             <Route exact path="/RaportUsers" component={RaportUsers}/>
+            <Route exact path="/ResetareParola" component={ResetareParola}/>
 
 
           

@@ -36,7 +36,7 @@ export default class Pedodontie extends Component {
         }
         return (
         <div>
-            <Navbar></Navbar>
+            {/* <Navbar></Navbar> */}
             {/* <PaginaPrezentare poze = "https://velvetdental.ro/wp-content/uploads/2018/09/dentist-fairfield-ca-dental-implants-1024x722.jpg"></PaginaPrezentare> */}
             <PaginaPrezentare {...poze}></PaginaPrezentare>
         </div>

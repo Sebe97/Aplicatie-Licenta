@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import * as ReactBootStrap from "react-bootstrap";
+import NavbarUser from "./NavbarUser";
 import Navbar from "./Navbar";
 import axios from 'axios';
 import "./RaportProgramari.css"
@@ -16,27 +17,28 @@ export default class RaportProgramari extends Component {
             super(props);
 
             this.programariIncepandDeAstazi = this.programariIncepandDeAstazi.bind(this);        
-            this.programariAll              = this.programariAll.bind(this);        
-            this.programariAstazi           = this.programariAstazi.bind(this);        
-            this.onChangeData               = this.onChangeData.bind(this);        
-            this.programariSpecificDay      = this.programariSpecificDay.bind(this);        
-            this.programariSpecificUser     = this.programariSpecificUser.bind(this);        
-            this.stergeInregistrare         = this.stergeInregistrare.bind(this);        
-            this.onChangePicklist           = this.onChangePicklist.bind(this);        
-            this.afiseazaModal              = this.afiseazaModal.bind(this);        
-            this.closeModal                 = this.closeModal.bind(this);        
+            this.programariAll              = this.programariAll.bind(this)             ;        
+            this.programariAstazi           = this.programariAstazi.bind(this)          ;        
+            this.onChangeData               = this.onChangeData.bind(this)              ;        
+            this.programariSpecificDay      = this.programariSpecificDay.bind(this)     ;        
+            this.programariSpecificUser     = this.programariSpecificUser.bind(this)    ;        
+            this.stergeInregistrare         = this.stergeInregistrare.bind(this)        ;        
+            this.onChangePicklist           = this.onChangePicklist.bind(this)          ;        
+            this.afiseazaModal              = this.afiseazaModal.bind(this)             ;        
+            this.closeModal                 = this.closeModal.bind(this)                ;        
             
             this.state={
-                programariData  : [],
-                token           : "",
-                random          : 0 ,
-                allUsers        : [],
-                picklist        : []   , 
-                showModal       : false,  
-                firstName       : "",  
-                lastName        : "",  
-                user            : "",  
-                parola          : "",  
+                programariData  : []        ,
+                token           : ""        ,
+                admin           : "false"   ,
+                random          : 0         ,
+                allUsers        : []        ,
+                picklist        : []        , 
+                showModal       : false     ,  
+                firstName       : ""        ,  
+                lastName        : ""        ,  
+                user            : ""        ,  
+                parola          : ""        ,  
             }
 
         }
@@ -64,10 +66,15 @@ export default class RaportProgramari extends Component {
             // end aducem userii
         
             const token = localStorage.getItem("userSession");
+            const admin = localStorage.getItem("Admin");
             this.setState({
                 token ,
+                admin ,
             })
+            if(admin=="false"){
+                window.location.replace("http://localhost:3000/RaportProgramariUser");
 
+            }
             
         }
 
@@ -221,7 +228,7 @@ export default class RaportProgramari extends Component {
                         <td>{programare.data}</td>
                         <td>{programare.ora} </td>
                         <td>{programare.afectiune} </td>
-                        <td ><div id={programare.user} onClick = {this.afiseazaModal}>{programare.userName} </div></td>
+                        <td ><a href = "#"id={programare.user} onClick = {this.afiseazaModal}>{programare.userName} </a></td>
                         {/* <td onClick = {this.openModal}>{programare.userName} </td> */}
                         <td>{programare.telefon}</td>
                         <td>{programare.user}</td>
@@ -237,6 +244,7 @@ export default class RaportProgramari extends Component {
 
             const {
                 token           = "",
+                admin           = "false",
                 programariData  = [],
                 allUsers        = [],
                 showModal       = false,
@@ -256,7 +264,8 @@ export default class RaportProgramari extends Component {
             return (
                 <div>
                     <div>
-                        <Modal show={showModal}>
+                        {/* Acests este un pop-up care afiseaza detaliile unui user */}
+                        <Modal show={showModal}> 
                             <Modal.Header>User</Modal.Header>
                             <Modal.Body>
 
@@ -291,8 +300,12 @@ export default class RaportProgramari extends Component {
                             </Modal.Body>
                             <Modal.Footer><Button onClick ={this.closeModal}>Close</Button></Modal.Footer>
                         </Modal>
+                        {/* END Acests este un pop-up care afiseaza detaliile unui user */}
+
                     </div>
-                    <Navbar/>
+                
+                    { admin == "true" && <Navbar/>}
+                    { admin == "false" && <NavbarUser/>}
                     <div style = {{padding: "10px"}}class="form-grou col-md 12 d-flex">
                 
                         <button className=" button form-grou col-md-1 d-flex" onClick = {this.programariAll}>Toate</button>

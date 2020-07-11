@@ -19,6 +19,14 @@ const UserSchema = new mongoose.Schema({
        type: String,
        default: ''
    }, 
+   admin: {
+       type: Boolean,
+       default: false
+   }, 
+   verificat: {
+       type: String,
+       default: false
+   }, 
    isDeleted: {
        type: Boolean,
        default: false

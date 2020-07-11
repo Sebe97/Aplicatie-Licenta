@@ -9,6 +9,7 @@ import AcasaFooter from './Footer';
 import ImagineDescriere from './Image';
 import Login from "./Login";
 import Navbar from "./Navbar";
+import NavbarUser from "./NavbarUser";
 
 export default class Acasa extends Component{
 
@@ -17,7 +18,7 @@ export default class Acasa extends Component{
          
         this.state={
             token: "",
-       
+            admin: false,
         }
 
     }
@@ -29,8 +30,10 @@ export default class Acasa extends Component{
         // asa ca vom afisa Pagination, in caz contrar redirectionam catre login
 
         const token = localStorage.getItem("userSession");
+        const admin = localStorage.getItem("Admin");
         this.setState({
             token ,
+            admin ,
         })
         // if(!token){
         //     alert("nu exista")
@@ -66,16 +69,19 @@ export default class Acasa extends Component{
 
     render(){
 
-        const{token=""} =  this.state
-        
+        const{
+            token = "",
+            admin = false,
+        } =  this.state
       
         
         return(
             <div>
-               { !token && <Login/>}
+            { !token && <Login/>}
                { token&&
                <div>
-                 <Navbar/>
+               { admin == "true" && <Navbar/>}
+               { admin == "false" && <NavbarUser/>}
                     <div className='fullBody'> 
                         <div className='acasaWrapper'>
                         
